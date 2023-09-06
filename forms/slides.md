@@ -1,7 +1,6 @@
 ---
-theme: seriph
+layout: cover
 background: https://source.unsplash.com/collection/94734566/1920x1080
-class: text-center
 highlighter: shiki
 lineNumbers: false
 info: |
@@ -41,6 +40,7 @@ The last comment block of each slide will be treated as slide notes. It will be 
 -->
 
 ---
+layout: content
 transition: fade-out
 ---
 
@@ -86,348 +86,234 @@ Here is another comment.
 layout: default
 ---
 
-# Table of contents
+# Problem Scenario:
+
+When dealing with forms on the frontend, we often need to sync the state of form input elements with corresponding state in JavaScript. It can be cumbersome to manually wire up value bindings and change event listeners:
 
 ```html
-<Toc minDepth="1" maxDepth="1"></Toc>
+<input
+  :value="text"
+  @input="event => text = event.target.value"
+/>
 ```
 
-<Toc maxDepth="1"></Toc>
+The `v-model` directive helps us simplify the above to:
+
+```html
+<input v-model="text">
+```
+
+In addition, `v-model` can be used on inputs of different types, `textarea`, and `select` elements. It automatically expands to different DOM property and event pairs based on the element it is used on:
+
+<img
+      class="w-[20rem] absolute -top-5 -right-6"
+      src="https://res.cloudinary.com/montanasolutions/image/upload/v1693997462/zuiw7o50cq3xzzqyeyi8.svg"
+      alt="top"
+    />
+
+<img
+      class="w-[20rem] absolute top-[27rem] -left-5"
+      src="https://res.cloudinary.com/montanasolutions/image/upload/v1693997461/gvlauyrg7lkmtkkaywib.svg"
+      alt="bottom"
+    />
 
 ---
 transition: slide-up
 level: 2
 ---
 
-# Navigation
-
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
-
-### Keyboard Shortcuts
-
-|     |     |
-| --- | --- |
-| <kbd>right</kbd> / <kbd>space</kbd>| next animation or slide |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd> | previous slide |
-| <kbd>down</kbd> | next slide |
-
-<!-- https://sli.dev/guide/animations.html#click-animations -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
-
----
-layout: image-right
-image: https://source.unsplash.com/collection/94734566/1920x1080
----
-
-# Code
-
-Use code snippets and get the highlighting directly![^1]
-
-```ts {all|2|1-6|9|all}
-interface User {
-  id: number
-  firstName: string
-  lastName: string
-  role: string
-}
-
-function updateUser(id: number, update: User) {
-  const user = getUser(id)
-  const newUser = { ...user, ...update }
-  saveUser(id, newUser)
-}
-```
-
-<arrow v-click="[3, 4]" x1="400" y1="420" x2="230" y2="330" color="#564" width="3" arrowSize="1" />
-
-[^1]: [Learn More](https://sli.dev/guide/syntax.html#line-highlighting)
-
-<style>
-.footnotes-sep {
-  @apply mt-20 opacity-10;
-}
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
-
----
-
-# Components
+# Basic Usage:
 
 <div grid="~ cols-2 gap-4">
 <div>
 
-You can use Vue components directly inside your slides.
-
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
+## Text
 
 ```html
-<Counter :count="10" />
+<p>Message is: {{ message }}</p>
+<input v-model="message" placeholder="edit me" />
 ```
-
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
-
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
+<Text />
 
 </div>
 <div>
 
-```html
-<Tweet id="1390115482657726468" />
-```
+## Textarea
 
-<Tweet id="1390115482657726468" scale="0.65" />
-
-</div>
-</div>
-
-<!--
-Presenter note with **bold**, *italic*, and ~~striked~~ text.
-
-Also, HTML elements are valid:
-<div class="flex w-full">
-  <span style="flex-grow: 1;">Left content</span>
-  <span>Right content</span>
-</div>
--->
-
-
----
-class: px-20
----
-
-# Themes
-
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
-
-<div grid="~ cols-2 gap-2" m="-t-2">
-
-```yaml
----
-theme: default
----
-```
-
-```yaml
----
-theme: seriph
----
-```
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/themes/use.html) and
-check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
-
----
-preload: false
----
-
-# Animations
-
-Animations are powered by [@vueuse/motion](https://motion.vueuse.org/).
+Note that interpolation inside `<textarea>` won't work. Use `v-model` instead.
 
 ```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }">
-  Slidev
-</div>
+<!-- bad -->
+<textarea>{{ text }}</textarea>
+
+<!-- good -->
+<textarea v-model="text"></textarea>
 ```
 
-<div class="w-60 relative mt-6">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-square.png"
+<Textarea />
+
+</div>
+</div>
+
+<img
+      class="w-[20rem] absolute -top-5 -right-6"
+      src="https://res.cloudinary.com/montanasolutions/image/upload/v1693997462/zuiw7o50cq3xzzqyeyi8.svg"
+      alt="top"
     />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-circle.png"
+
+<img
+      class="w-[20rem] absolute top-[27rem] -left-5"
+      src="https://res.cloudinary.com/montanasolutions/image/upload/v1693997461/gvlauyrg7lkmtkkaywib.svg"
+      alt="bottom"
     />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-triangle.png"
+
+---
+transition: slide-up
+level: 2
+---
+
+# Basic Usage:
+
+<div grid="~ cols-2 gap-4">
+<div>
+
+## Checkbox
+
+Single checkbox, boolean value:
+
+```html
+<input type="checkbox" id="checkbox" v-model="checked" />
+<label for="checkbox">{{ checked }}</label>
+```
+<CheckboxSingle />
+
+</div>
+<div>
+
+## Array of checkboxes
+
+We can also bind multiple checkboxes to the same array.
+
+```js
+const checkedNames = ref([])
+```
+
+```html
+<div>Checked names: {{ checkedNames }}</div>
+
+<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+<label for="jack">Jack</label>
+
+<input type="checkbox" id="john" value="John" v-model="checkedNames">
+<label for="john">John</label>
+
+<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+<label for="mike">Mike</label>
+```
+
+<CheckboxArrays />
+
+</div>
+</div>
+
+<img
+      class="w-[20rem] absolute -top-5 -right-6"
+      src="https://res.cloudinary.com/montanasolutions/image/upload/v1693997462/zuiw7o50cq3xzzqyeyi8.svg"
+      alt="top"
     />
-  </div>
 
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
+<img
+      class="w-[20rem] absolute top-[27rem] -left-5"
+      src="https://res.cloudinary.com/montanasolutions/image/upload/v1693997461/gvlauyrg7lkmtkkaywib.svg"
+      alt="bottom"
+    />
 
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
-}
-</script>
+---
+transition: slide-up
+level: 2
+---
 
-<div
-  v-motion
-  :initial="{ x:35, y: 40, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
+# Basic Usage:
 
-[Learn More](https://sli.dev/guide/animations.html#motion)
+<div grid="~ cols-2 gap-4">
+<div>
+
+## Radio
+
+```html
+<div>Picked: {{ picked }}</div>
+
+<input type="radio" id="one" value="One" v-model="picked" />
+<label for="one">One</label>
+
+<input type="radio" id="two" value="Two" v-model="picked" />
+<label for="two">Two</label>
+```
+<Radio />
 
 </div>
+<div>
 
----
+## Select
 
-# LaTeX
+Single Select:
 
-LaTeX is supported out-of-box powered by [KaTeX](https://katex.org/).
+```html
+<div>Selected: {{ selected }}</div>
 
-<br>
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$
-\begin{array}{c}
-
-\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
-= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
-
-\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
-
-\nabla \cdot \vec{\mathbf{B}} & = 0
-
-\end{array}
-$$
-
-<br>
-
-[Learn more](https://sli.dev/guide/syntax#latex)
-
----
-
-# Diagrams
-
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
-
-<div class="grid grid-cols-4 gap-5 pt-4 -mb-6">
-
-```mermaid {scale: 0.5}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
+<select v-model="selected" class="bg-red-300">
+  <option disabled value="">Please select one</option>
+  <option>A</option>
+  <option>B</option>
+  <option>C</option>
+</select>
 ```
 
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
-
-```mermaid
-mindmap
-  root((mindmap))
-    Origins
-      Long history
-      ::icon(fa fa-book)
-      Popularisation
-        British popular psychology author Tony Buzan
-    Research
-      On effectivness<br/>and features
-      On Automatic creation
-        Uses
-            Creative techniques
-            Strategic planning
-            Argument mapping
-    Tools
-      Pen and paper
-      Mermaid
-```
-
-```plantuml {scale: 0.7}
-@startuml
-
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
-}
-
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
-
-cloud {
-  [Example 1]
-}
-
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
-
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
-```
+<SingleSelect />
 
 </div>
+</div>
 
-[Learn More](https://sli.dev/guide/syntax.html#diagrams)
+<img
+      class="w-[20rem] absolute -top-5 -right-6"
+      src="https://res.cloudinary.com/montanasolutions/image/upload/v1693997462/zuiw7o50cq3xzzqyeyi8.svg"
+      alt="top"
+    />
+
+<img
+      class="w-[20rem] absolute top-[27rem] -left-5"
+      src="https://res.cloudinary.com/montanasolutions/image/upload/v1693997461/gvlauyrg7lkmtkkaywib.svg"
+      alt="bottom"
+    />
 
 ---
-src: ./pages/multiple-entries.md
-hide: false
+transition: slide-up
+level: 2
 ---
 
----
-layout: center
-class: text-center
----
+# Select Continuation
 
-# Learn More
+### Multiple select (bound to array):
 
-[Documentations](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/showcases.html)
+```html
+<div>Selected: {{ selected }}</div>
+
+<select v-model="selected" multiple>
+  <option>A</option>
+  <option>B</option>
+  <option>C</option>
+</select>
+```
+<MultipleSelect />
+
+<img
+      class="w-[20rem] absolute -top-5 -right-6"
+      src="https://res.cloudinary.com/montanasolutions/image/upload/v1693997462/zuiw7o50cq3xzzqyeyi8.svg"
+      alt="top"
+    />
+
+<img
+      class="w-[20rem] absolute top-[27rem] -left-5"
+      src="https://res.cloudinary.com/montanasolutions/image/upload/v1693997461/gvlauyrg7lkmtkkaywib.svg"
+      alt="bottom"
+    />
