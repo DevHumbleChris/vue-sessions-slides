@@ -1,6 +1,5 @@
 ---
 layout: cover
-background: https://source.unsplash.com/collection/94734566/1920x1080
 highlighter: shiki
 lineNumbers: false
 info: |
@@ -317,3 +316,9 @@ level: 2
       src="https://res.cloudinary.com/montanasolutions/image/upload/v1693997461/gvlauyrg7lkmtkkaywib.svg"
       alt="bottom"
     />
+
+---
+layout: the-end
+transition: slide-up
+level: 2
+---

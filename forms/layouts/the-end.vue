@@ -2,8 +2,8 @@
     <div class="relative">
         <img src="/performance.png" alt="performance" class="h-full">
         <div class="absolute top-1/2 left-10 max-w-[20rem] space-y-3">
-            <h2 class="text-gray-400">Session Topic:</h2>
-            <p class="font-bold text-gray-600 text-3xl">Creating Forms and Binding Input Elements with Vue 3</p>
+            <h2 class="text-gray-400">The End:</h2>
+            <p class="font-bold text-gray-600 text-3xl">Any Questions</p>
             <Link href="https://x.com/AmChrisKE" target="_blank" class="flex items-center gap-1 group">
                 <uim:twitter class="text-[#03a9f4]"/>
                 <p class="text-gray-600 font-bold group-hover:underline">@AmChrisKE</p>
